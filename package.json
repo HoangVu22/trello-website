@@ -3,6 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": "Nguyễn Hoàng Vũ",
+  "engines": {
+    "node": "18.16.0"
+  },
   "scripts": {
     "dev": "vite --host",
     "build": "vite build --base=./",
