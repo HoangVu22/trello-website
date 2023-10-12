@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "~/*": ["./src/*"],
+    },
+  }
+}
+
+//  khi có config này thì khi chúng ta bấm ctrl + click vào path nào đó , nó sẽ đưa chúng ta tới cái path đó
