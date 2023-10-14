@@ -34,7 +34,7 @@ function Profiles() {
           aria-expanded={open ? 'true' : undefined}
         >
           <Avatar
-            sx={{ width: 30, height: 30 }}
+            sx={{ width: 32, height: 32 }}
             src="https://avatars.githubusercontent.com/u/90297995?v=4"
             alt="HoangVu"
           />

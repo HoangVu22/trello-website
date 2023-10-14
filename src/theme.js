@@ -1,5 +1,5 @@
 // import { createTheme } from '@mui/material/styles'
-import { cyan, deepOrange, orange, teal } from '@mui/material/colors'
+// import { cyan, deepOrange, orange, teal } from '@mui/material/colors'
 import { experimental_extendTheme as extendTheme } from '@mui/material/styles'
 
 const theme = extendTheme({
@@ -9,18 +9,18 @@ const theme = extendTheme({
   },
 
   colorSchemes: {
-    light: {
-      palette: {
-        primary: teal,
-        secondary: deepOrange,
-      },
-    },
-    dark: {
-      palette: {
-        primary: cyan,
-        secondary: orange,
-      },
-    },
+    // light: {
+    //   palette: {
+    //     primary: teal,
+    //     secondary: deepOrange,
+    //   },
+    // },
+    // dark: {
+    //   palette: {
+    //     primary: cyan,
+    //     secondary: orange,
+    //   },
+    // },
   },
 
   components: {
@@ -33,11 +33,11 @@ const theme = extendTheme({
             height: '6px',
           },
           '*::-webkit-scrollbar-thumb': {
-            backgroundColor: '#bdc3c7',
+            backgroundColor: '#dcdde1',
             borderRadius: '6px',
           },
           '*::-webkit-scrollbar-thumb:hover': {
-            backgroundColor: '#00b894',
+            backgroundColor: 'white',
             borderRadius: '6px',
           },
         },
@@ -47,38 +47,28 @@ const theme = extendTheme({
       styleOverrides: {
         root: {
           textTransform: 'none', // tất cả thẻ button về chữ thường
+          borderWidth: '0.5px',   
+          '&:hover': {
+            borderWidth: '1px'
+          }
         },
       },
     },
     MuiInputLabel: {   // custom input label
       styleOverrides: {
-        root: ({ theme }) => {
-          return {
-            color: theme.palette.primary.main,
-            fontSize: '0.875rem',
-          }
+        root: {
+          fontSize: '0.875rem',
         }
       },
     },
     MuiOutlinedInput: {  // custom outline input
       styleOverrides: {
-        root: ({ theme }) => {
-          return {
-            color: theme.palette.primary.main,
-            fontSize: '0.875rem',
-            '.MuiOutlinedInput-notchedOutline': {  // custom outline
-              borderColor: theme.palette.primary.light
-            },
-            '&:hover': {
-              '.MuiOutlinedInput-notchedOutline': {
-                borderColor: theme.palette.primary.main
-              },
-            },
-            '& fieldset': {
-              borderWidth: '1px !important',  // cho cái outline bớt đậm
-            }
-          } 
-        }
+        root: {
+          fontSize: '0.875rem',
+          '& fieldset': { borderWidth: '0.5px !important' }, // cho cái outline bớt đậm
+          '&:hover fieldset': { borderWidth: '1px !important' },
+          '&.Mui-focused fieldset': { borderWidth: '1px !important' }
+        } 
       },
     },
   },
