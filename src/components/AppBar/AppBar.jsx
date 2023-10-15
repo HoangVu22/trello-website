@@ -1,19 +1,20 @@
 import { useState } from 'react'
-import Box from '@mui/material/Box'
-import ModeSelect from '~/components/ModeSelect'
-import AppsIcon from '@mui/icons-material/Apps'
+import ModeSelect from '~/components/ModeSelect/ModeSelect'
 import { ReactComponent as trelloLogo } from '~/assets/trello.svg'
+import Workspaces from './Menu/Workspaces'
+import Recent from './Menu/Recent'
+import Starred from './Menu/Starred'
+import Templates from './Menu/Templates'
+import Profiles from './Menu/Profiles'
+
+import Box from '@mui/material/Box'
+import AppsIcon from '@mui/icons-material/Apps'
 import { SvgIcon, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Badge from '@mui/material/Badge'
 import Tooltip from '@mui/material/Tooltip'
 import InputAdornment from '@mui/material/InputAdornment'
-import Workspaces from './Menu/Workspaces'
-import Recent from './Menu/Recent'
-import Starred from './Menu/Starred'
-import Templates from './Menu/Templates'
-import Profiles from './Menu/Profiles'
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd'
@@ -26,7 +27,7 @@ function AppBar() {
   return (
     <Box px={2} sx={{
       bgcolor: (theme) => (
-        theme.palette.mode === 'dark' ? '#2c3e50' : '#072754'
+        theme.palette.mode === 'dark' ? '#2c3e50' : '#00796b' // 072754
       ),
       width: '100%',
       height: (theme) => theme.trello.appBarHeight,
@@ -35,6 +36,7 @@ function AppBar() {
       justifyContent: 'space-between',
       gap: 2,
       overflowX: 'auto',
+      '&::-webkit-scrollbar-track': { m: 2 },
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <AppsIcon sx={{ color: 'white', cursor: 'pointer' }} />

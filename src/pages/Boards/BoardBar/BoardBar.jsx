@@ -29,7 +29,7 @@ function BoardBar() {
   return (
     <Box px={2} sx={{
       bgcolor: (theme) => (
-        theme.palette.mode === 'dark' ? '#34495e' : '#fed9b7'
+        theme.palette.mode === 'dark' ? '#34495e' : '#26a69a'
       ),
       width: '100%',
       height: (theme) => theme.trello.boardBarHeight,
@@ -39,6 +39,7 @@ function BoardBar() {
       gap: 2,
       borderBottom: '1px solid white',
       overflowX: 'auto',
+      '&::-webkit-scrollbar-track': { m: 2 },
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <Chip
@@ -87,7 +88,10 @@ function BoardBar() {
               width: 32,
               height: 32,
               fontSize: '15px',
-              border: 'none'
+              border: 'none',
+              color: 'white',
+              cursor: 'pointer',
+              '&:first-of-type': { bgcolor: '#a4b0be' }
             }
           }}
         >
