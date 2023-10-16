@@ -17,6 +17,7 @@ import ContentCopy from '@mui/icons-material/ContentCopy'
 import ContentPaste from '@mui/icons-material/ContentPaste'
 import AddCardIcon from '@mui/icons-material/AddCard'
 import DragHandleIcon from '@mui/icons-material/DragHandle'
+import { mapOrder } from '~/utils/sorts'
 
 function Column({ column }) {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -27,6 +28,8 @@ function Column({ column }) {
   const handleClose = () => {
     setAnchorEl(null)
   }
+
+  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
 
   return (
     <Box
@@ -118,7 +121,7 @@ function Column({ column }) {
       </Box>
 
       {/* List Cards */}
-      <ListCards cards={column?.cards} />
+      <ListCards cards={orderedCards} />
 
       {/* Footer */}
       <Box 
