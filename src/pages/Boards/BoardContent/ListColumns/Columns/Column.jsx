@@ -18,7 +18,7 @@ import ContentPaste from '@mui/icons-material/ContentPaste'
 import AddCardIcon from '@mui/icons-material/AddCard'
 import DragHandleIcon from '@mui/icons-material/DragHandle'
 
-function Column() {
+function Column({ column }) {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -52,7 +52,9 @@ function Column() {
           justifyContent: 'space-between',
         }}
       >
-        <Typography variant='h6' sx={{ fontWeight: 'bold', cursor: 'pointer', fontSize: '1rem' }}>Column Title</Typography>
+        <Typography variant='h6' sx={{ fontWeight: 'bold', cursor: 'pointer', fontSize: '1rem' }}>
+          {column?.title}
+        </Typography>
 
         <Box>
           <Tooltip title='More option'>
@@ -116,7 +118,7 @@ function Column() {
       </Box>
 
       {/* List Cards */}
-      <ListCards />
+      <ListCards cards={column?.cards} />
 
       {/* Footer */}
       <Box 

@@ -10,6 +10,7 @@ import VpnLockIcon from '@mui/icons-material/VpnLock'
 import AddToDriveIcon from '@mui/icons-material/AddToDrive'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
+import { capitalizeFirstLetter } from '~/utils/formatters'
 
 const MENU_STYLES = {
   color: 'white',
@@ -25,7 +26,8 @@ const MENU_STYLES = {
   },
 }
 
-function BoardBar() {
+function BoardBar({ board }) {
+
   return (
     <Box px={2} sx={{
       bgcolor: (theme) => (
@@ -46,7 +48,7 @@ function BoardBar() {
           sx={ MENU_STYLES }
           icon={<DashboardIcon />}
           // clickable là để click vào  cái label đó
-          label="Hoang Vu" clickable />
+          label={board?.title} clickable />
         <Chip
           sx={ MENU_STYLES }
           icon={<ViewArrayIcon />}
@@ -54,7 +56,7 @@ function BoardBar() {
         <Chip
           sx={ MENU_STYLES }
           icon={<VpnLockIcon />}
-          label="Public/Private Workspace" clickable />
+          label={capitalizeFirstLetter(board?.type)} clickable />
         <Chip
           sx={ MENU_STYLES }
           icon={<AddToDriveIcon />}

@@ -9,32 +9,42 @@ import CommentIcon from '@mui/icons-material/Comment'
 import AttachmentIcon from '@mui/icons-material/Attachment'
 
 
-function Card({ temporaryHideMedia }) {
-  if (temporaryHideMedia) {
-    return (
-      <MuiCard sx={{ cursor: 'pointer', boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)', overflow: 'unset', borderRadius: '8px' }}>
-        <CardContent sx={{ p: 1.5, '&:last-child': { p: 1.5 } }}>
-          <Typography>Nguyen Hoang Vu</Typography>
-        </CardContent>
-      </MuiCard>
-    )
+function Card({ card }) {
+  const shouldShowCardAction = () => {
+    // 1 trong 3 thằng tồn tại thì nó sẽ là true và CardAction sẽ show lên
+    return !!card?.memberIds?.length || !!card?.comments?.length || !!card?.attachments?.length
   }
 
   return (
     <MuiCard sx={{ cursor: 'pointer', boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)', overflow: 'unset', borderRadius: '8px' }}>
-      <CardMedia
-        sx={{ height: 140, borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}
-        image="https://icdn.dantri.com.vn/k:a6f7e4a5db/2016/01/09/natural-1-1452281304567/bo-suu-tap-hinh-nen-phong-canh-tuyet-dep-danh-cho-nguoi-yeu-thien-nhien.jpg"
-        title="green iguana"
-      />
+      {/* khi nó có card.cover thì mới có CardMedia */}
+      {card?.cover && 
+        <CardMedia
+          sx={{ height: 140, borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}
+          image={card?.cover}
+        />
+      }
       <CardContent sx={{ p: 1.5, '&:last-child': { p: 1.5 } }}>
-        <Typography>Nguyen Hoang Vu</Typography>
+        <Typography>{card?.title}</Typography>
       </CardContent>
-      <CardActions sx={{ p: '0 4px 8px 4px' }}>
-        <Button size="small" startIcon={<GroupIcon />}>20</Button>
-        <Button size="small" startIcon={<CommentIcon />}>6</Button>
-        <Button size="small" startIcon={<AttachmentIcon />}>10</Button>
-      </CardActions>
+
+      {shouldShowCardAction() && 
+        <CardActions sx={{ p: '0 4px 8px 4px' }}>
+          {/* !!: nếu mảng memberIds.length có giá trị mà muốn lấy giá trị true/false thì
+              - nếu 1 dấu ! thì nó sẽ phủ định thằng .length Vd: [].length => 0 (false), but ![].length => true
+              - nếu 2 dấu !! thì nó sẽ phủ định của cái phủ định trước Vd: ![].length => true but !![].length => false
+          */}
+          {!!card?.memberIds?.length && 
+            <Button size="small" startIcon={<GroupIcon />}>{card?.memberIds?.length}</Button>
+          }
+          {!!card?.comments?.length && 
+            <Button size="small" startIcon={<CommentIcon />}>{card?.comments?.length}</Button>
+          }
+          {!!card?.attachments?.length && 
+            <Button size="small" startIcon={<AttachmentIcon />}>{card?.attachments?.length}</Button>
+          }
+        </CardActions>
+      }
     </MuiCard>
   )
 }
