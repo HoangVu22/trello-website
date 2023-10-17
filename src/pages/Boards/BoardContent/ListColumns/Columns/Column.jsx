@@ -19,7 +19,25 @@ import AddCardIcon from '@mui/icons-material/AddCard'
 import DragHandleIcon from '@mui/icons-material/DragHandle'
 import { mapOrder } from '~/utils/sorts'
 
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+
 function Column({ column }) {
+  // kéo thả
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
+    id: column._id,
+    data: { ...column } // bổ sung dl sau khi kéo thả
+  })
+  const dndKitColumnStyles = {
+    // touchAction: 'none', // dành cho sensor default dạng pointersensor (trên điện thoại)
+    
+    // thay CSS.Transform bằng CSS.Translate thì cột sẽ k bị biến đổi khi kéo
+    // Đọc thêm: https://github.com/clauderic/dnd-kit/issues/117
+    transform: CSS.Translate.toString(transform),
+    transition,
+  }
+
+  //  dropdown menu
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -29,10 +47,16 @@ function Column({ column }) {
     setAnchorEl(null)
   }
 
+  // Sắp xếp card
   const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
 
   return (
     <Box
+      ref={setNodeRef}
+      style={dndKitColumnStyles}
+      {...attributes}
+      {...listeners}
+
       sx={{
         minWidth: '300px',
         maxWidth: '300px',
@@ -53,6 +77,7 @@ function Column({ column }) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
+          cursor: 'pointer',
         }}
       >
         <Typography variant='h6' sx={{ fontWeight: 'bold', cursor: 'pointer', fontSize: '1rem' }}>
