@@ -26,6 +26,7 @@ function Card({ card }) {
     transition,
     // isDragging: có nghĩa là khi đang kéo sẽ có bóng mờ
     opacity: isDragging ? 0.5 : undefined,
+    border: isDragging ? '1px solid #009688' : undefined,
   }
 
   // -------------
