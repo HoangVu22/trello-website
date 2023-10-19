@@ -13,7 +13,8 @@ import {
   MouseSensor,
   TouchSensor,
   DragOverlay, // làm cái bóng giữ chỗ, khi kéo column hay card nó vẫn sẽ còn cái bóng đang kéo ở vị trí đó
-  defaultDropAnimationSideEffects
+  defaultDropAnimationSideEffects,
+  closestCorners,
 } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 
@@ -175,6 +176,9 @@ function BoardContent({ board }) {
       onDragOver={handleDragOver}  // trigger trong quá trình kéo (drag) 1 phần tử
       onDragEnd={handleDragEnd} // prop onDragEnd: sau khi kéo và thả đi
       sensors={sensors}
+      // Thuật toán phát hiện va chạm (nếu k có nó thì card với cover lớn sẽ k kéo qua column khác được)
+      // vì lúc này nó đang bị conflict giữa card và column
+      collisionDetection={closestCorners}
     >
       <Box sx={{
         bgcolor: (theme) => (
