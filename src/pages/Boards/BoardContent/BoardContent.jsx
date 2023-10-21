@@ -4,7 +4,8 @@ import { useEffect, useState, useCallback, useRef } from 'react'
 import { mapOrder } from '~/utils/sorts'
 import Column from './ListColumns/Columns/Column'
 import Card from './ListColumns/Columns/ListCards/Card/Card'
-import { cloneDeep } from 'lodash'
+import { generatePlaceholderCard } from '~/utils/formatters'
+import { cloneDeep, isEmpty } from 'lodash'
 
 import {
   DndContext,  // DndContext là vùng để kéo thả //PointerSensor
@@ -81,6 +82,12 @@ function BoardContent({ board }) {
       if (nextActiveColumn) {
         // xóa card ở column active (column cũ) là cái mà chúng ta kéo card ra khỏi column để sang column khác
         nextActiveColumn.cards = nextActiveColumn.cards.filter(card => card._id !== activeDraggingCardId)
+        
+        // Thêm Placeholder Card nếu column rỗng: bị kéo hết card đi, k còn cái nào nữa
+        if (isEmpty(nextActiveColumn.cards)) {
+          nextActiveColumn.cards = [generatePlaceholderCard(nextActiveColumn)]
+        }
+
         // cập nhật lại mảng cardOrderIds cho chuẩn dữ liệu
         nextActiveColumn.cardOrderIds = nextActiveColumn.cards.map(card => card._id)
       }
@@ -97,6 +104,11 @@ function BoardContent({ board }) {
 
         // Thêm card đang kéo vào overColumn theo vị trí index mới
         nextOverColumn.cards = nextOverColumn.cards.toSpliced(newCardIndex, 0, rebuild_activeDraggingCardData)
+
+        // Xóa Placeholder Card đi nếu nó có ít nhất 1 card
+        // Lọc cái mảng nextOverColumn.cards và những cái card nào không phải là FE_PlaceholderCard thì mới giữ lại, còn lại xóa
+        nextOverColumn.cards = nextOverColumn.cards.filter(card => !card.FE_PlaceholderCard)
+
         // cập nhật lại mảng cardOrderIds cho chuẩn dữ liệu
         nextOverColumn.cardOrderIds = nextOverColumn.cards.map(card => card._id)
       }
