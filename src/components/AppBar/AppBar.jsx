@@ -27,8 +27,9 @@ function AppBar() {
   return (
     <Box px={2} sx={{
       bgcolor: (theme) => (
-        theme.palette.mode === 'dark' ? '#2c3e50' : '#00796b' // 072754
+        theme.palette.mode === 'dark' ? '#2c3e50' : '#00796b'
       ),
+      background: 'linear-gradient(to right bottom, #031544, #1c3ca1)',
       width: '100%',
       height: (theme) => theme.trello.appBarHeight,
       display: 'flex',

@@ -334,6 +334,7 @@ function BoardContent({ board }) {
         bgcolor: (theme) => (
           theme.palette.mode === 'dark' ? '#34495e' : '#009688'
         ),
+        background: 'linear-gradient(to right bottom, #0081a7, #00afb9)',
         width: '100%',
         height: (theme) => theme.trello.boardContentHeight,
         p: '10px 0'

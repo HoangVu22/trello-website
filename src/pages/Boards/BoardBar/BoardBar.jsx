@@ -31,8 +31,9 @@ function BoardBar({ board }) {
   return (
     <Box px={2} sx={{
       bgcolor: (theme) => (
-        theme.palette.mode === 'dark' ? '#34495e' : '#26a69a'
+        theme.palette.mode === 'dark' ? '#34495e' : '#1c3ca1'
       ),
+      background: 'linear-gradient(to right bottom, #1c3ca1, #5b4c97)',
       width: '100%',
       height: (theme) => theme.trello.boardBarHeight,
       display: 'flex',
