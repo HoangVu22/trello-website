@@ -15,9 +15,8 @@ import {
   DragOverlay, // làm cái bóng giữ chỗ, khi kéo column hay card nó vẫn sẽ còn cái bóng đang kéo ở vị trí đó
   defaultDropAnimationSideEffects,
   closestCorners,
-  closestCenter,
   pointerWithin,
-  rectIntersection,
+  // rectIntersection,
   getFirstCollision,
 } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
@@ -261,19 +260,23 @@ function BoardContent({ board }) {
     // Tìm các điểm giao nhau, va chạm - Intersections với con trỏ
     const pointerIntersections = pointerWithin(args)
 
-    // Thuật toán phát hiện va chạm và trả về 1 mảng các va chạm
-    const intersections = pointerIntersections.length > 0 ? pointerIntersections : rectIntersection(args)
+    // Nếu pointerIntersections là mảng rỗng thì return luôn, không làm gì hết
+    // fix bug clickering trong trường hợp kéo card có img lên trên cùng ra khỏi khu vực kéo thả
+    if (!pointerIntersections.length) return
 
-    // Tìm overId đầu tiên trong intersections ở trên
-    let overId = getFirstCollision(intersections, 'id')
+    // Thuật toán phát hiện va chạm và trả về 1 mảng các va chạm (không cần bước này nữa)
+    // const intersections = pointerIntersections.length > 0 ? pointerIntersections : rectIntersection(args)
+
+    // Tìm overId đầu tiên trong pointerIntersections ở trên
+    let overId = getFirstCollision(pointerIntersections, 'id')
 
     if (overId) {
       /* Nếu over là column thì sẽ tìm tới cardId gần nhất bên trong khu vực va chạm đó đựa vào thuật toán 
-        phát hiện va chạm closestCorners or closestCenter đều được. tuy nhiên dùng closestCenter mượt mà hơn
+        phát hiện va chạm closestCorners or closestCenter đều được. tuy nhiên dùng closestCorners mượt mà hơn
       */
       const checkColumn = orderedColumns.find(col => col._id === overId)
       if (checkColumn) {
-        overId = closestCenter({
+        overId = closestCorners({
           ...args,
           droppableContainers: args.droppableContainers.filter(container => {
             return (container.id !== overId) && (checkColumn?.cardOrderIds?.includes(container.id))
