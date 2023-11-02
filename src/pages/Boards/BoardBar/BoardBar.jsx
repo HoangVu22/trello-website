@@ -45,19 +45,22 @@ function BoardBar({ board }) {
       '&::-webkit-scrollbar-track': { m: 2 },
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <Chip
-          sx={ MENU_STYLES }
-          icon={<DashboardIcon />}
-          // clickable là để click vào  cái label đó
-          label={board?.title} clickable />
-        <Chip
-          sx={ MENU_STYLES }
-          icon={<ViewArrayIcon />}
-          label="My Trello Website" clickable />
+        <Tooltip title={board?.description}>
+          <Chip
+            sx={ MENU_STYLES }
+            icon={<DashboardIcon />}
+            label={board?.title}
+            clickable // clickable là để click vào  cái label đó
+          />
+        </Tooltip>
         <Chip
           sx={ MENU_STYLES }
           icon={<VpnLockIcon />}
           label={capitalizeFirstLetter(board?.type)} clickable />
+        <Chip
+          sx={ MENU_STYLES }
+          icon={<ViewArrayIcon />}
+          label="My Trello Website" clickable />
         <Chip
           sx={ MENU_STYLES }
           icon={<AddToDriveIcon />}
