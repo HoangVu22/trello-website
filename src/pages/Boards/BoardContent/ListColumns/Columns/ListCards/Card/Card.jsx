@@ -47,8 +47,10 @@ function Card({ card }) {
         boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
         overflow: 'unset',
         borderRadius: '8px',
+        border: '1px solid transparent',
+        '&:hover': { borderColor: (theme) => theme.palette.primary.main },
         // Ẩn Placeholder Card
-        display: card?.FE_PlaceholderCard ? 'none' : 'block'
+        display: card?.FE_PlaceholderCard ? 'none' : 'block',
       }}>
       
       {/* khi nó có card.cover thì mới có CardMedia */}
