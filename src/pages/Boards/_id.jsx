@@ -5,6 +5,8 @@ import BoardBar from './BoardBar/BoardBar'
 import BoardContent from './BoardContent/BoardContent'
 // import { mockData } from '~/apis/mock-data'
 import { fetchBoardDetailsAPI, createNewColumnAPI, createNewCardAPI } from '~/apis'
+import { generatePlaceholderCard } from '~/utils/formatters'
+import { isEmpty } from 'lodash'
 
 function Board() {
   const [board, setBoard] = useState(null)
@@ -14,6 +16,15 @@ function Board() {
     // Call Api
     fetchBoardDetailsAPI(boardId)
       .then(board => { // board này là lấy từ Api về
+
+        // Xử lý vấn đề kéo thả card vào 1 column rỗng ( lấy về cả 1 board và check, khi F5 trang web )
+        board.columns.forEach(column => {
+          if (isEmpty(column.cards)) {
+            column.cards = [generatePlaceholderCard(column)]
+            column.cardOrderIds = [generatePlaceholderCard(column)._id]
+          }
+        })
+        
         setBoard(board)
       })
   }, [])
@@ -25,6 +36,10 @@ function Board() {
       boardId: board._id
     })
     // console.log('createdColumn: ', createdColumn)
+
+    // Xử lý vấn đề kéo thả card vào 1 column rỗng ( khi tạo mới 1 column )
+    createdColumn.cards = [generatePlaceholderCard(createdColumn)]
+    createdColumn.cardOrderIds = [generatePlaceholderCard(createdColumn)._id]
 
     // Câp nhật lại state board để khi tạo xong column thì đổ trực tiếp ra UI
     const newBoard = { ...board } // clone cái board ra
