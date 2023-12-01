@@ -28,7 +28,7 @@ const ACTIVE_DRAG_ITEM_TYPE = {
   CARD: 'ACTIVE_DRAG_ITEM_CARD',
 }
 
-function BoardContent({ board, createNewColumn, createNewCard }) {
+function BoardContent({ board, createNewColumn, createNewCard, moveColumns }) {
   // const orderedColumns = mapOrder(board?.columns, board?.columnOrderIds, '_id')
   // đưa dl orderedColumns ra dạng state để chúng ta cập nhật lại và nó sẽ ăn lại state và render lại cpn
   const [orderedColumns, setOrderedColumns] = useState([])
@@ -245,6 +245,9 @@ function BoardContent({ board, createNewColumn, createNewCard }) {
   
         // Cập nhật lại state columns ban đầu sau khi đã kéo thả
         setOrderedColumns(dndOrderedColumns)
+        
+        // Gọi lên props func moveColumns nằm ở cpn cha
+        moveColumns(dndOrderedColumns)
       }
     }
 
