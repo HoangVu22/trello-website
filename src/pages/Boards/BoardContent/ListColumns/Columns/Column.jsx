@@ -20,7 +20,6 @@ import ContentCopy from '@mui/icons-material/ContentCopy'
 import ContentPaste from '@mui/icons-material/ContentPaste'
 import AddCardIcon from '@mui/icons-material/AddCard'
 import DragHandleIcon from '@mui/icons-material/DragHandle'
-import { mapOrder } from '~/utils/sorts'
 
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -58,8 +57,8 @@ function Column({ column, createNewCard }) {
     setAnchorEl(null)
   }
 
-  // Sắp xếp card
-  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
+  // Card đã được sắp xếp ở cpn cha
+  const orderedCards = column.cards
 
   // Form tạo card mới
   const [openNewCardForm, setOpenNewCardForm] = useState(false)
