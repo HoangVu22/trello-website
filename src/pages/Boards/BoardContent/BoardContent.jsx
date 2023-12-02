@@ -27,7 +27,7 @@ const ACTIVE_DRAG_ITEM_TYPE = {
   CARD: 'ACTIVE_DRAG_ITEM_CARD',
 }
 
-function BoardContent({ board, createNewColumn, createNewCard, moveColumns, moveColumnsInTheSameColumn }) {
+function BoardContent({ board, createNewColumn, createNewCard, moveColumns, moveColumnsInTheSameColumn, moveCardToDifferentColumn }) {
   // const orderedColumns = mapOrder(board?.columns, board?.columnOrderIds, '_id')
   // đưa dl orderedColumns ra dạng state để chúng ta cập nhật lại và nó sẽ ăn lại state và render lại cpn
   const [orderedColumns, setOrderedColumns] = useState([])
@@ -61,7 +61,8 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns, move
     over,
     activeColumn,
     activeDraggingCardId,
-    activeDraggingCardData
+    activeDraggingCardData,
+    triggerFrom
   ) => {
     setOrderedColumns(prevColumns => {
       // Tìm vị trí index của overCard trong Column (là nơi activeDraggingCard sắp được thả)
@@ -113,6 +114,17 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns, move
         nextOverColumn.cardOrderIds = nextOverColumn.cards.map(card => card._id)
       }
 
+      // Nếu func này được gọi từ handleDragEnd nghĩ là đã kéo thả xong, lúc này mới xử lý gọi API 1 lần ở đây
+      if (triggerFrom === 'handleDragEnd') {
+        // Gọi lên props func moveCardToDifferentColumn nằm ở cpn cha
+        moveCardToDifferentColumn(
+          activeDraggingCardId,
+          oldColumnWhenDraggingCard._id,
+          nextOverColumn._id,
+          nextColumns
+        )
+      }
+
       return nextColumns
     })
   }
@@ -161,7 +173,8 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns, move
         over,
         activeColumn,
         activeDraggingCardId,
-        activeDraggingCardData
+        activeDraggingCardData,
+        'handleDragOver'
       )
     }
   }
@@ -198,7 +211,8 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns, move
           over,
           activeColumn,
           activeDraggingCardId,
-          activeDraggingCardData
+          activeDraggingCardData,
+          'handleDragEnd'
         )
       } else {
         // Hành động kéo thả card trong cùng 1 column
