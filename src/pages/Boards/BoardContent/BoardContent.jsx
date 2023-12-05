@@ -27,7 +27,7 @@ const ACTIVE_DRAG_ITEM_TYPE = {
   CARD: 'ACTIVE_DRAG_ITEM_CARD',
 }
 
-function BoardContent({ board, createNewColumn, createNewCard, moveColumns, moveColumnsInTheSameColumn, moveCardToDifferentColumn }) {
+function BoardContent({ board, createNewColumn, createNewCard, moveColumns, moveColumnsInTheSameColumn, moveCardToDifferentColumn, deleteColumn }) {
   // const orderedColumns = mapOrder(board?.columns, board?.columnOrderIds, '_id')
   // đưa dl orderedColumns ra dạng state để chúng ta cập nhật lại và nó sẽ ăn lại state và render lại cpn
   const [orderedColumns, setOrderedColumns] = useState([])
@@ -365,6 +365,7 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns, move
           columns={orderedColumns}
           createNewColumn={createNewColumn}
           createNewCard={createNewCard}
+          deleteColumn={deleteColumn}
         />
 
         <DragOverlay dropAnimation={dropAnimation}>

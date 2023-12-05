@@ -11,7 +11,7 @@ import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortabl
 // horizontalListSortingStrategy: nó sẽ tối ưu cho việc kéo ngang
 // verticalListSortingStrategy: nó sẽ tối ưu cho việc kéo dọc
 
-function ListColumns({ columns, createNewColumn, createNewCard }) {
+function ListColumns({ columns, createNewColumn, createNewCard, deleteColumn }) {
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   // nếu createNewColumn là false thì khi chạy qua toggleCreateNewColumn sẽ chuyển thành true và ngược lại
   const toggleOpenNewColumnForm = () => setOpenNewColumnForm(!openNewColumnForm)
@@ -59,7 +59,11 @@ function ListColumns({ columns, createNewColumn, createNewCard }) {
       >
 
         {columns?.map((column) => {
-          return <Column key={column?._id} column={column} createNewCard={createNewCard} />
+          return <Column
+            key={column?._id}
+            column={column}
+            createNewCard={createNewCard}
+            deleteColumn={deleteColumn} />
         })}
 
         {/* Box Add new column */}

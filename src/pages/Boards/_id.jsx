@@ -12,11 +12,13 @@ import {
   createNewCardAPI, 
   updateBoardDetailsAPI, 
   updateColumnDetailsAPI,
-  moveCardToDifferentColumnAPI
+  moveCardToDifferentColumnAPI,
+  deleteColumnDetailsAPI
 } from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatters'
 import { isEmpty } from 'lodash'
 import { mapOrder } from '~/utils/sorts'
+import { toast } from 'react-toastify'
 
 function Board() {
   const [board, setBoard] = useState(null)
@@ -144,6 +146,21 @@ function Board() {
     })
   }
 
+  // Xử lý xóa Column và toàn bộ Card của Column đó
+  const deleteColumn = (columnId) => {
+    // Update cho chuẩn dl state board
+    const newBoard = { ...board } // clone cái board ra
+    newBoard.columns = newBoard.columns.filter(col => col._id !== columnId)
+    newBoard.columnOrderIds = newBoard.columnOrderIds.filter(_id => _id !== columnId)
+    setBoard(newBoard)
+
+    // Gọi API delete Column
+    deleteColumnDetailsAPI(columnId)
+      .then(res => {
+        toast.success(res?.deleteResult)
+      })
+  }
+
   // Loading khi k có Board
   if (!board) {
     return (
@@ -172,6 +189,7 @@ function Board() {
         moveColumns={moveColumns}
         moveColumnsInTheSameColumn={moveColumnsInTheSameColumn}
         moveCardToDifferentColumn={moveCardToDifferentColumn}
+        deleteColumn={deleteColumn}
       />
     </Container>
   )
